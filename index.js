@@ -21,6 +21,11 @@ io.on('connection', socket => {
     socket.on('send', message => {
         socket.broadcast.emit('recieve', { message: message, name: users[socket.id] })
     })
+    socket.on('send-image', imageData => {
+        // Broadcast the image data to all clients
+        socket.broadcast.emit('receive-image', imageData);
+    });
+    
 
     socket.on('disconnect', () => {
         socket.broadcast.emit('left', users[socket.id])
@@ -29,7 +34,7 @@ io.on('connection', socket => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Server is Running 👍');
+    res.send('Server is Running 👍 ichatserver.onrender.com ');
 })
 
 const PORT = process.env.PORT || 3000;
